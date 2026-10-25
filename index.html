@@ -2,7 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+<script>
+  if (sessionStorage.getItem("sdgDemoAccess") !== "true") {
+    window.location.replace("login.html");
+  }
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | SuperBikes Dream Garage</title>
@@ -32,43 +36,17 @@
             </button>
 
             <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="bikes.html">Bikes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="compare.html">Compare</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="finder.html">Bike Finder</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link active" href="cost-calculator.html">Cost Calculator</a></li>
-                    <li class="nav-item">
-                        <li class="nav-item">
-  <a class="nav-link" href="customizer.html">Customisation</a>
-</li>
-                        <a class="nav-link" href="showrooms.html">Showroom</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
-                    </li>
-                    
-<li class="nav-item">
-  <a class="nav-link" href="login.html">Login</a>
-</li>
-
-                    
-<li class="nav-item">
-  <a class="nav-link" href="community.html">Rider Hub</a>
-</li>
-
-
-
-
-                </ul>
+                <<ul class="navbar-nav ms-auto gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="bikes.html">Bikes</a></li>
+        <li class="nav-item"><a class="nav-link" href="finder.html">Bike Finder</a></li>
+        <li class="nav-item"><a class="nav-link" href="compare.html">Compare</a></li>
+        <li class="nav-item"><a class="nav-link" href="cost-calculator.html">Cost Calculator</a></li>
+        <li class="nav-item"><a class="nav-link" href="showrooms.html">Showrooms</a></li>
+        <li class="nav-item"><a class="nav-link" href="customizer.html">Customizer</a></li>
+        <li class="nav-item"><a class="nav-link" href="community.html">Rider Hub</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
             </div>
         </div>
     </nav>

@@ -87,11 +87,15 @@
     </footer>
   </div>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      window.location.href = "index.html";
-    });
+  <<script>
+  document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    sessionStorage.setItem("sdgDemoAccess", "true");
+
+    window.location.href = "index.html";
+  });
+</script>
   </script>
 </body>
 </html>
