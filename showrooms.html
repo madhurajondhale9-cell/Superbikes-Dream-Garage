@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Showroom Locator | SuperBikes Dream Garage</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --red: #ff3030;
+      --dark: #101010;
+      --card: #191919;
+      --muted: #b5b5b5;
+    }
+
+    body {
+      background: var(--dark);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background: #080808;
+      border-bottom: 1px solid #303030;
+    }
+
+    .navbar-brand {
+      font-weight: 900;
+      color: var(--red) !important;
+      letter-spacing: 1px;
+    }
+
+    .nav-link {
+      color: #ddd !important;
+      font-size: 14px;
+    }
+
+    .nav-link:hover {
+      color: var(--red) !important;
+    }
+
+    .hero {
+      padding: 75px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #270707, #101010 65%);
+      border-bottom: 1px solid #333;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .hero h1 span {
+      color: var(--red);
+    }
+
+    .hero p {
+      color: #c5c5c5;
+    }
+
+    .search-panel {
+      background: #191919;
+      padding: 22px;
+      border: 1px solid #333;
+      border-radius: 12px;
+      margin-top: -28px;
+      position: relative;
+    }
+
+    .form-control, .form-select {
+      background: #101010;
+      color: white;
+      border: 1px solid #444;
+      padding: 12px;
+    }
+
+    .form-control:focus, .form-select:focus {
+      background: #101010;
+      color: white;
+      border-color: var(--red);
+      box-shadow: 0 0 0 0.15rem #ff303044;
+    }
+
+    .form-control::placeholder {
+      color: #aaa;
+    }
+
+    .form-select option {
+      background: #101010;
+      color: white;
+    }
+
+    .section-title {
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .section-title span {
+      color: var(--red);
+    }
+
+    .showroom-card {
+      background: var(--card);
+      border: 1px solid #333;
+      border-radius: 12px;
+      overflow: hidden;
+      height: 100%;
+      transition: 0.25s;
+    }
+
+    .showroom-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--red);
+      box-shadow: 0 10px 30px #0008;
+    }
+
+    .card-top {
+      background: linear-gradient(120deg, #351010, #202020);
+      padding: 22px;
+      border-bottom: 1px solid #383838;
+    }
+
+    .bike-icon {
+      font-size: 35px;
+    }
+
+    .brand-tag {
+      display: inline-block;
+      background: #ff30301b;
+      color: #ff6868;
+      border: 1px solid #ff303055;
+      border-radius: 30px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .showroom-card h3 {
+      font-size: 21px;
+      font-weight: 800;
+      margin-top: 14px;
+    }
+
+    .showroom-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .card-body {
+      padding: 22px;
+    }
+
+    .detail-label {
+      color: var(--red);
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: white;
+      border: 1px solid var(--red);
+      font-weight: bold;
+      padding: 10px 16px;
+    }
+
+    .btn-red:hover {
+      background: #d82020;
+      color: white;
+    }
+
+    .btn-outline-light {
+      font-weight: bold;
+    }
+
+    .result-count {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 45px 20px;
+      color: #bbb;
+      border: 1px dashed #444;
+      border-radius: 12px;
+    }
+
+    .info-box {
+      background: #171717;
+      border-left: 4px solid var(--red);
+      padding: 18px;
+      border-radius: 5px;
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    footer {
+      background: #070707;
+      border-top: 1px solid #333;
+      color: #888;
+      text-align: center;
+      padding: 25px 12px;
+      margin-top: 60px;
+    }
+
+    footer span {
+      color: var(--red);
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">SDG 🏍️</a>
+
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="bikes.html">Bikes</a></li>
+        <li class="nav-item"><a class="nav-link" href="compare.html">Compare</a></li>
+        <li class="nav-item"><a class="nav-link" href="finder.html">Bike Finder</a></li>
+        <li class="nav-item"><a class="nav-link" href="cost-calculator.html">Cost Calculator</a></li>
+        <li class="nav-item"><a class="nav-link" href="customizer.html">Customizer</a></li>
+        <li class="nav-item"><a class="nav-link active" href="showrooms.html">Showrooms</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        
+<li class="nav-item">
+  <a class="nav-link" href="community.html">Rider Hub</a>
+</li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <p class="text-uppercase fw-bold" style="color:#ff6868;letter-spacing:3px">
+      Find Your Next Ride
+    </p>
+    <h1>Find Your <span>Showroom</span></h1>
+    <p class="mt-3 mb-0">
+      Explore motorcycle dealerships around Pune. Your next machine is waiting.
+    </p>
+  </div>
+</header>
+
+<main class="container pb-4">
+
+  <section class="search-panel">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-6">
+        <label for="searchInput" class="form-label fw-bold">Search showroom</label>
+        <div class="input-group">
+  <input type="search" id="searchInput" class="form-control"
+    placeholder="Enter bike name, e.g. Hayabusa">
+
+  <button type="button" class="btn btn-danger"
+    id="searchButton">
+    SEARCH
+  </button>
+</div>
+      </div>
+
+      <div class="col-md-3">
+        <label for="brandFilter" class="form-label fw-bold">Brand</label>
+        
+<select id="brandFilter" class="form-select">
+  <option value="all">All Brands</option>
+  <option value="Yamaha">Yamaha</option>
+  <option value="Suzuki">Suzuki</option>
+  <option value="BMW Motorrad">BMW Motorrad</option>
+  <option value="Ducati">Ducati</option>
+  <option value="Kawasaki">Kawasaki</option>
+</select>
+      </div>
+
+      <div class="col-md-3">
+        <label for="areaFilter" class="form-label fw-bold">Area</label>
+        
+<select id="areaFilter" class="form-select">
+  <option value="all">All Areas</option>
+  <option value="Baner">Baner</option>
+  <option value="Sinhgad Road">Sinhgad Road</option>
+  <option value="Sangamvadi">Sangamvadi</option>
+  <option value="Shivajinagar">Shivajinagar</option>
+  <option value="Wakadewadi">Wakadewadi</option>
+  <option value="Pimpri">Pimpri-Chinchwad</option>
+</select>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+      <div>
+        <h2 class="section-title">Dealership <span>Directory</span></h2>
+        <p class="text-secondary mb-0">Explore brands and find directions.</p>
+      </div>
+      <span class="result-count" id="resultCount" aria-live="polite"></span>
+    </div>
+
+    <div class="row g-4" id="showroomGrid"></div>
+
+    <div class="empty-state mt-3" id="emptyState">
+      <div style="font-size:40px">🏍️</div>
+      <h4 class="mt-3">No showrooms found</h4>
+      <p>Try another brand, area, or search keyword.</p>
+      <button class="btn btn-outline-light" id="resetButton">Reset Filters</button>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="info-box">
+      <strong class="text-white">Before you visit:</strong>
+      Dealer addresses and phone numbers can change. Contact the showroom
+      to confirm opening hours, test rides, and availability of your preferred
+      motorcycle before travelling.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p class="mb-1">Built for riders. Designed for the road. 🏁</p>
+  <p class="mb-0">© 2026 <span>SuperBikes Dream Garage</span></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  
+const showrooms = [
+  {
+    name: "Yamaha Motor Showroom - Raya Motors",
+    brand: "Yamaha",
+    area: "Baner",
+    address: "Maruti Millennium Tower, Maruti Chowk, Pune-Bangalore Highway, Baner, Pune, Maharashtra 411045",
+    phone: "9175017272",
+    models: ["Yamaha YZF-R1", "R1"],
+    description: "Contact the dealer about Yamaha sport bikes and R1 availability.",
+    icon: "🔵"
+  },
+  {
+    name: "Arihaan Suzuki",
+    brand: "Suzuki",
+    area: "Sinhgad Road",
+    address: "Shivneri Building, Sinhgad Road, Pune, Maharashtra 411030",
+    phone: "7065046334",
+    models: ["Suzuki Hayabusa", "Hayabusa", "GSX1300R"],
+    description: "Ask the dealership about Hayabusa sales and availability.",
+    icon: "🔷"
+  },
+  {
+    name: "BMW Motorrad - Bavaria Motors",
+    brand: "BMW Motorrad",
+    area: "Sangamvadi",
+    address: "Suyog Platinum Towers, Naylor Road, Sangamvadi, Pune, Maharashtra 411001",
+    phone: "8287055000",
+    models: ["BMW S 1000 RR", "S 1000 RR", "S1000RR"],
+    description: "Ask about the BMW S 1000 RR, variants, and test rides.",
+    icon: "🏁"
+  },
+  {
+    name: "Ducati Legacy Motors",
+    brand: "Ducati",
+    area: "Shivajinagar",
+    address: "Cello Platina, Fergusson College Road, Shivajinagar, Pune, Maharashtra 411005",
+    phone: "2029529151",
+    models: ["Ducati Panigale V4", "Panigale V4"],
+    description: "Ask about Panigale V4 availability and bookings.",
+    icon: "🔴"
+  },
+  {
+    name: "Kawasaki Pune",
+    brand: "Kawasaki",
+    area: "Wakadewadi",
+    address: "The Metropolitan, Old Mumbai-Pune Highway, Wakadewadi, Pune, Maharashtra 411003",
+    phone: "7666902090",
+    models: ["Kawasaki Ninja ZX-10R", "Ninja ZX-10R", "ZX10R", "ZX-10R"],
+    description: "Ask about Ninja ZX-10R availability and bookings.",
+    icon: "🟢"
+  },
+  {
+    name: "Kawasaki Pimpri Chinchwad",
+    brand: "Kawasaki",
+    area: "Pimpri",
+    address: "Chadha Mansion, Mumbai-Pune Road, Pimpri, Pune, Maharashtra 411018",
+    phone: "7030900280",
+    models: ["Kawasaki Ninja ZX-10R", "Ninja ZX-10R", "ZX10R", "ZX-10R"],
+    description: "Contact the dealership about Kawasaki motorcycles.",
+    icon: "🟢"
+  }
+];
+
+
+  const grid = document.getElementById("showroomGrid");
+  const searchInput = document.getElementById("searchInput");
+  const brandFilter = document.getElementById("brandFilter");
+  const areaFilter = document.getElementById("areaFilter");
+  const resultCount = document.getElementById("resultCount");
+  const emptyState = document.getElementById("emptyState");
+
+  function renderShowrooms() {
+    const search = searchInput.value.trim().toLowerCase();
+    const brand = brandFilter.value;
+    const area = areaFilter.value;
+
+    
+const filtered = showrooms.filter(showroom => {
+  const searchText = search.toLowerCase();
+
+  const searchableText = [
+    showroom.name,
+    showroom.brand,
+    showroom.area,
+    showroom.address,
+    ...(showroom.models || [])
+  ].join(" ").toLowerCase();
+
+  return searchableText.includes(searchText) &&
+    (brand === "all" || showroom.brand === brand) &&
+    (area === "all" || showroom.area === area);
+});
+
+
+    resultCount.textContent =
+      "Showing " + filtered.length + " of " + showrooms.length + " showrooms";
+
+    grid.innerHTML = filtered.map(showroom => {
+      const mapsUrl =
+        "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(showroom.address);
+
+      const phoneButton = showroom.phone
+        ? `<a class="btn btn-outline-light flex-fill" href="tel:${showroom.phone}">📞 Call</a>`
+        : "";
+
+      return `
+        <div class="col-md-6 col-lg-4">
+          <article class="showroom-card">
+            <div class="card-top">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="bike-icon">${showroom.icon}</span>
+                <span class="brand-tag">${showroom.brand}</span>
+              </div>
+              <h3>${showroom.name}</h3>
+              <p class="mb-0">📍 ${showroom.area}, Pune</p>
+            </div>
+
+            <div class="card-body">
+              <p>${showroom.description}</p>
+
+              <div class="mb-3">
+                <div class="detail-label mb-1">Address</div>
+                <p class="mb-0">${showroom.address}</p>
+              </div>
+
+              <div class="d-flex gap-2 mt-4">
+                <a class="btn btn-red flex-fill"
+                   href="${mapsUrl}" target="_blank"
+                   rel="noopener noreferrer">📍 Get Directions</a>
+                ${phoneButton}
+              </div>
+            </div>
+          </article>
+        </div>
+      `;
+    }).join("");
+
+    emptyState.style.display = filtered.length ? "none" : "block";
+  }
+
+  // Search while typing
+document.getElementById("searchButton")
+  .addEventListener("click", renderShowrooms);
+
+searchInput.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    renderShowrooms();
+  }
+});
+
+// Brand and area filters
+brandFilter.addEventListener("change", renderShowrooms);
+areaFilter.addEventListener("change", renderShowrooms);
+
+  document.getElementById("resetButton").addEventListener("click", () => {
+    searchInput.value = "";
+    brandFilter.value = "all";
+    areaFilter.value = "all";
+    renderShowrooms();
+  });
+
+  renderShowrooms();
+</script>
+
+</body>
+</html>

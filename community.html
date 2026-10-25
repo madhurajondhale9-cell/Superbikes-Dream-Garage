@@ -1,0 +1,799 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rider Hub | SuperBikes Dream Garage</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+  <style>
+    :root {
+      --red: #ff3030;
+      --dark: #101010;
+      --card: #191919;
+      --muted: #b8b8b8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background: var(--dark);
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background: #080808;
+      border-bottom: 1px solid #303030;
+    }
+
+    .navbar-brand {
+      color: var(--red) !important;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .nav-link {
+      color: #ddd !important;
+      font-size: 14px;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--red) !important;
+    }
+
+    .hero {
+      padding: 72px 20px;
+      text-align: center;
+      background: linear-gradient(120deg, #350707, #101010 70%);
+      border-bottom: 1px solid #333;
+    }
+
+    .hero-tag {
+      color: #ff7777;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 4px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin: 15px 0;
+    }
+
+    .hero h1 span { color: var(--red); }
+
+    .hero p {
+      color: #ccc;
+      max-width: 650px;
+      margin: auto;
+      line-height: 1.8;
+    }
+
+    .stat-card, .panel, .post-card {
+      background: var(--card);
+      border: 1px solid #333;
+      border-radius: 12px;
+    }
+
+    .stat-card {
+      padding: 20px;
+      text-align: center;
+      height: 100%;
+    }
+
+    .stat-number {
+      color: var(--red);
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .section-title {
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    .section-title span { color: var(--red); }
+
+    .muted { color: var(--muted); }
+
+    .panel { padding: 25px; }
+
+    .form-label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .form-control, .form-select {
+      background: #101010;
+      color: white;
+      border: 1px solid #444;
+      padding: 12px;
+    }
+
+    .form-control:focus, .form-select:focus {
+      background: #101010;
+      color: white;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px #ff303022;
+    }
+
+    .form-control::placeholder { color: #888; }
+
+    .form-select option {
+      background: #101010;
+      color: white;
+    }
+
+    textarea.form-control {
+      min-height: 125px;
+      resize: vertical;
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: white;
+      border: 1px solid var(--red);
+      font-weight: bold;
+      padding: 11px 18px;
+    }
+
+    .btn-red:hover {
+      background: #d82020;
+      color: white;
+    }
+
+    .btn-outline-light { font-weight: bold; }
+
+    .star-picker {
+      display: flex;
+      gap: 8px;
+    }
+
+    .star-button {
+      border: 0;
+      background: transparent;
+      color: #555;
+      font-size: 30px;
+      padding: 0 2px;
+      cursor: pointer;
+    }
+
+    .star-button.selected { color: #ffc247; }
+
+    .post-card {
+      padding: 22px;
+      margin-bottom: 16px;
+      overflow-wrap: anywhere;
+    }
+
+    .post-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #3b1111;
+      border: 1px solid #6b2929;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .post-author {
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+
+    .post-date {
+      color: #999;
+      font-size: 12px;
+    }
+
+    .post-tag {
+      display: inline-block;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: bold;
+      border-radius: 30px;
+      background: #292929;
+      color: #ddd;
+      margin-bottom: 12px;
+    }
+
+    .tag-review { color: #ffd16b; }
+    .tag-tip { color: #7edba1; }
+    .tag-caution { color: #ff7777; }
+    .tag-discussion { color: #85c5ff; }
+
+    .post-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .post-content {
+      color: #ccc;
+      font-size: 14px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      margin-bottom: 16px;
+    }
+
+    .post-bike {
+      color: #ff7777;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .post-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-top: 1px solid #333;
+      padding-top: 14px;
+    }
+
+    .action-btn {
+      border: 1px solid #444;
+      background: #222;
+      color: #ddd;
+      border-radius: 6px;
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+
+    .action-btn:hover {
+      border-color: var(--red);
+      color: white;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 38px 15px;
+      border: 1px dashed #444;
+      border-radius: 12px;
+      color: #aaa;
+    }
+
+    .notice {
+      border-left: 4px solid #e5a83b;
+      background: #211b10;
+      color: #e6d6b4;
+      border-radius: 6px;
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .safety-note {
+      color: #aaa;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    footer {
+      background: #070707;
+      border-top: 1px solid #333;
+      color: #888;
+      text-align: center;
+      padding: 25px 12px;
+      margin-top: 45px;
+    }
+
+    footer span { color: var(--red); }
+
+    @media (max-width: 576px) {
+      .panel { padding: 18px; }
+      .post-card { padding: 17px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">SDG 🏍️</a>
+
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="bikes.html">Bikes</a></li>
+        <li class="nav-item"><a class="nav-link" href="compare.html">Compare</a></li>
+        <li class="nav-item"><a class="nav-link" href="finder.html">Bike Finder</a></li>
+        <li class="nav-item"><a class="nav-link" href="cost-calculator.html">Cost Calculator</a></li>
+        <li class="nav-item"><a class="nav-link" href="customizer.html">Customizer</a></li>
+        <li class="nav-item"><a class="nav-link" href="showrooms.html">Showrooms</a></li>
+        <li class="nav-item"><a class="nav-link" href="community.html">Rider Hub</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">Real Riders · Shared Experiences</div>
+    <h1>Rider <span>Hub</span></h1>
+    <p>
+      Share your bike reviews, riding tips, ownership experiences, and cautions.
+      Help fellow riders make better-informed decisions.
+    </p>
+  </div>
+</header>
+
+<main class="container py-5">
+
+  <!-- Community statistics -->
+  <section class="row g-3 mb-5">
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-number" id="totalPosts">0</div>
+        <div class="stat-label">Community Posts</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-number" id="totalReviews">0</div>
+        <div class="stat-label">Bike Reviews</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-number" id="totalTips">0</div>
+        <div class="stat-label">Tips & Cautions</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-number">🏁</div>
+        <div class="stat-label">Ride Responsibly</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="row g-4">
+
+    <!-- Create post -->
+    <div class="col-lg-5">
+      <section class="panel">
+        <h2 class="section-title">Create a <span>Post</span></h2>
+        <p class="muted small mt-2">
+          Share your experience with the rider community.
+        </p>
+
+        <form id="postForm">
+          <div class="mb-3">
+            <label for="author" class="form-label">Display Name *</label>
+            <input id="author" class="form-control"
+              placeholder="e.g. SpeedRider" required maxlength="35">
+          </div>
+
+          <div class="mb-3">
+            <label for="postType" class="form-label">Post Category *</label>
+            <select id="postType" class="form-select" required>
+              <option value="review">⭐ Bike Review</option>
+              <option value="tip">🛠️ Maintenance / Riding Tip</option>
+              <option value="caution">⚠️ Caution / Potential Issue</option>
+              <option value="discussion">💬 Question / Discussion</option>
+              <option value="suggestion">💡 Bike Suggestion</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="bike" class="form-label">Bike Model *</label>
+            <select id="bike" class="form-select" required>
+              <option value="">Select a bike</option>
+              <option>Kawasaki Ninja ZX-10R</option>
+              <option>Kawasaki Z900</option>
+              <option>Yamaha YZF-R1</option>
+              <option>Suzuki Hayabusa</option>
+              <option>BMW S 1000 RR</option>
+              <option>Ducati Panigale V4</option>
+              <option>KTM Duke</option>
+              <option>Royal Enfield</option>
+              <option>Other / General Discussion</option>
+            </select>
+          </div>
+
+          <div class="mb-3" id="ratingSection">
+            <label class="form-label">Your Rating *</label>
+            <div class="star-picker" id="starPicker" aria-label="Choose rating">
+              <button type="button" class="star-button" data-rating="1"
+                aria-label="1 star">★</button>
+              <button type="button" class="star-button" data-rating="2"
+                aria-label="2 stars">★</button>
+              <button type="button" class="star-button" data-rating="3"
+                aria-label="3 stars">★</button>
+              <button type="button" class="star-button" data-rating="4"
+                aria-label="4 stars">★</button>
+              <button type="button" class="star-button" data-rating="5"
+                aria-label="5 stars">★</button>
+            </div>
+            <small class="muted" id="ratingText">Choose 1–5 stars for a review.</small>
+          </div>
+
+          <div class="mb-3">
+            <label for="postTitle" class="form-label">Post Title *</label>
+            <input id="postTitle" class="form-control"
+              placeholder="Give your post a clear title"
+              required maxlength="90">
+          </div>
+
+          <div class="mb-3">
+            <label for="postContent" class="form-label">Your Experience *</label>
+            <textarea id="postContent" class="form-control"
+              placeholder="Share your review, tip, question, or caution..."
+              required minlength="10" maxlength="1200"></textarea>
+            <small class="muted">10–1200 characters.</small>
+          </div>
+
+          <div class="notice mb-3">
+            For cautions, describe what you personally observed and when.
+            Avoid presenting unverified claims as confirmed safety defects.
+            Never share private contact details or identifying information.
+          </div>
+
+          <button type="submit" class="btn btn-red w-100">
+            PUBLISH POST ↗
+          </button>
+        </form>
+
+        <div class="mt-3 small muted" id="formMessage"
+          role="status" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <!-- Posts feed -->
+    <div class="col-lg-7">
+      <section>
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+          <div>
+            <h2 class="section-title mb-1">Rider <span>Feed</span></h2>
+            <p class="muted small mb-0">Reviews, experiences, and discussions.</p>
+          </div>
+          <select id="sortFilter" class="form-select" style="width:auto">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="liked">Most Liked</option>
+          </select>
+        </div>
+
+        <div class="row g-2 mb-4">
+          <div class="col-sm-7">
+            <input type="search" id="feedSearch" class="form-control"
+              placeholder="Search bikes or posts...">
+          </div>
+          <div class="col-sm-5">
+            <select id="categoryFilter" class="form-select">
+              <option value="all">All Categories</option>
+              <option value="review">Bike Reviews</option>
+              <option value="tip">Tips</option>
+              <option value="caution">Cautions</option>
+              <option value="discussion">Discussions</option>
+              <option value="suggestion">Suggestions</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="notice mb-4">
+          <strong>Static demo:</strong> Posts are saved only in this browser.
+          They aren't shared with other visitors or devices. Don't use this
+          demo to report urgent safety issues.
+        </div>
+
+        <div id="postFeed"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p class="mb-1">Built for riders. Designed for the road. 🏁</p>
+  <p class="mb-0">© 2026 <span>SuperBikes Dream Garage</span> · Ride Responsibly</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const STORAGE_KEY = "sdgRiderHubPostsV1";
+
+  const postForm = document.getElementById("postForm");
+  const postFeed = document.getElementById("postFeed");
+  const formMessage = document.getElementById("formMessage");
+  const postType = document.getElementById("postType");
+  const ratingSection = document.getElementById("ratingSection");
+  const ratingText = document.getElementById("ratingText");
+  const starButtons = [...document.querySelectorAll(".star-button")];
+
+  let selectedRating = 0;
+  let posts = loadPosts();
+
+  function loadPosts() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      return Array.isArray(saved)
+        ? saved.filter(p =>
+            p &&
+            typeof p.id === "string" &&
+            typeof p.author === "string" &&
+            typeof p.title === "string" &&
+            typeof p.content === "string" &&
+            typeof p.type === "string" &&
+            typeof p.bike === "string"
+          )
+        : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function savePosts() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+      return true;
+    } catch (error) {
+      formMessage.textContent =
+        "Browser storage is unavailable or full. Your post could not be saved.";
+      return false;
+    }
+  }
+
+  function updateRating() {
+    const isReview = postType.value === "review";
+    ratingSection.style.display = isReview ? "block" : "none";
+
+    if (!isReview) {
+      selectedRating = 0;
+    }
+
+    starButtons.forEach(button => {
+      const value = Number(button.dataset.rating);
+      button.classList.toggle("selected", isReview && value <= selectedRating);
+    });
+
+    ratingText.textContent = isReview
+      ? (selectedRating ? selectedRating + " out of 5 stars selected." : "Choose 1–5 stars for a review.")
+      : "Ratings are available for bike reviews.";
+  }
+
+  starButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      selectedRating = Number(button.dataset.rating);
+      updateRating();
+    });
+  });
+
+  postType.addEventListener("change", updateRating);
+
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    })[character]);
+  }
+
+  function getCategoryLabel(type) {
+    const labels = {
+      review: "Bike Review",
+      tip: "Maintenance / Riding Tip",
+      caution: "Caution / Potential Issue",
+      discussion: "Question / Discussion",
+      suggestion: "Bike Suggestion"
+    };
+    return labels[type] || "Community Post";
+  }
+
+  function getCategoryClass(type) {
+    return {
+      review: "tag-review",
+      tip: "tag-tip",
+      caution: "tag-caution",
+      discussion: "tag-discussion",
+      suggestion: "tag-discussion"
+    }[type] || "";
+  }
+
+  function formatDate(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "Date unavailable";
+    return date.toLocaleString();
+  }
+
+  function renderPosts() {
+    const search = document.getElementById("feedSearch").value
+      .trim().toLowerCase();
+    const category = document.getElementById("categoryFilter").value;
+    const sort = document.getElementById("sortFilter").value;
+
+    let filtered = posts.filter(post => {
+      const searchable = [
+        post.author, post.title, post.content, post.bike,
+        getCategoryLabel(post.type)
+      ].join(" ").toLowerCase();
+
+      return searchable.includes(search) &&
+        (category === "all" || post.type === category);
+    });
+
+    if (sort === "oldest") {
+      filtered.sort((a, b) => a.createdAt - b.createdAt);
+    } else if (sort === "liked") {
+      filtered.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+    } else {
+      filtered.sort((a, b) => b.createdAt - a.createdAt);
+    }
+
+    document.getElementById("totalPosts").textContent = posts.length;
+    document.getElementById("totalReviews").textContent =
+      posts.filter(p => p.type === "review").length;
+    document.getElementById("totalTips").textContent =
+      posts.filter(p => p.type === "tip" || p.type === "caution").length;
+
+    if (!filtered.length) {
+      postFeed.innerHTML = `
+        <div class="empty-state">
+          <div style="font-size:40px">🏍️</div>
+          <h3 class="mt-3">No posts found</h3>
+          <p>Be the first to share an experience, or try another search.</p>
+        </div>`;
+      return;
+    }
+
+    postFeed.innerHTML = filtered.map(post => {
+      const stars = post.type === "review" && post.rating
+        ? `<div style="color:#ffc247;margin-bottom:10px">${"★".repeat(post.rating)}${"☆".repeat(5 - post.rating)}
+             <span style="color:#aaa;font-size:12px"> ${post.rating}/5</span>
+           </div>`
+        : "";
+
+      const caution = post.type === "caution"
+        ? `<div class="notice mb-3">Community-submitted caution: verify details independently before acting.</div>`
+        : "";
+
+      return `
+        <article class="post-card">
+          <div class="post-top mb-3">
+            <div class="d-flex gap-3">
+              <div class="avatar">🏍️</div>
+              <div>
+                <div class="post-author">${escapeHTML(post.author)}</div>
+                <div class="post-date">${escapeHTML(formatDate(post.createdAt))}</div>
+              </div>
+            </div>
+            <span class="post-tag ${getCategoryClass(post.type)}">
+              ${escapeHTML(getCategoryLabel(post.type))}
+            </span>
+          </div>
+
+          <div class="post-bike">🏁 ${escapeHTML(post.bike)}</div>
+          <h3 class="post-title">${escapeHTML(post.title)}</h3>
+          ${stars}
+          ${caution}
+          <p class="post-content">${escapeHTML(post.content)}</p>
+
+          <div class="post-actions">
+            <button type="button" class="action-btn" data-action="like"
+              data-id="${escapeHTML(post.id)}">♥ Like (${post.likes || 0})</button>
+            <button type="button" class="action-btn" data-action="delete"
+              data-id="${escapeHTML(post.id)}">🗑 Delete</button>
+          </div>
+        </article>`;
+    }).join("");
+  }
+
+  postForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (!postForm.checkValidity()) {
+      postForm.reportValidity();
+      return;
+    }
+
+    if (postType.value === "review" && selectedRating === 0) {
+      formMessage.textContent = "Please select a star rating for your review.";
+      return;
+    }
+
+    const newPost = {
+      id: Date.now().toString() + "-" + Math.random().toString(36).slice(2, 8),
+      author: document.getElementById("author").value.trim(),
+      type: postType.value,
+      bike: document.getElementById("bike").value,
+      rating: postType.value === "review" ? selectedRating : 0,
+      title: document.getElementById("postTitle").value.trim(),
+      content: document.getElementById("postContent").value.trim(),
+      createdAt: Date.now(),
+      likes: 0
+    };
+
+    if (!newPost.author || !newPost.title || newPost.content.length < 10) {
+      formMessage.textContent = "Please complete all fields correctly.";
+      return;
+    }
+
+    posts.unshift(newPost);
+
+    if (!savePosts()) {
+      posts.shift();
+      return;
+    }
+
+    postForm.reset();
+    selectedRating = 0;
+    updateRating();
+
+    document.getElementById("feedSearch").value = "";
+    document.getElementById("categoryFilter").value = "all";
+    document.getElementById("sortFilter").value = "newest";
+
+    formMessage.textContent = "Your post has been saved in this browser!";
+    renderPosts();
+  });
+
+  postFeed.addEventListener("click", event => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+
+    const id = button.dataset.id;
+    const action = button.dataset.action;
+    const index = posts.findIndex(post => post.id === id);
+
+    if (index === -1) return;
+
+    if (action === "like") {
+      posts[index].likes = (posts[index].likes || 0) + 1;
+    } else if (action === "delete") {
+      const confirmed = confirm("Delete this post from this browser?");
+      if (!confirmed) return;
+      posts.splice(index, 1);
+    }
+
+    if (savePosts()) {
+      renderPosts();
+    }
+  });
+
+  document.getElementById("feedSearch")
+    .addEventListener("input", renderPosts);
+
+  document.getElementById("categoryFilter")
+    .addEventListener("change", renderPosts);
+
+  document.getElementById("sortFilter")
+    .addEventListener("change", renderPosts);
+
+  updateRating();
+  renderPosts();
+</script>
+
+</body>
+</html>

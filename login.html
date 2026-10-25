@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | SuperBikes Dream Garage</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+  <div class="login-page">
+    <nav class="navbar navbar-dark px-4 py-3">
+      <a class="navbar-brand fw-bold" href="login.html">
+        <span class="brand-mark">M</span>
+        SUPERBIKES <span class="red-text">DREAM GARAGE</span>
+      </a>
+    </nav>
+
+    <main class="container">
+      <div class="row align-items-center justify-content-center min-vh-75">
+
+        <div class="col-lg-6 intro">
+          <p class="eyebrow">BUILT FOR INDIAN ROADS</p>
+
+          <h1>FIND YOUR<br>
+            <span class="red-text">NEXT BEAST.</span>
+          </h1>
+
+          <p class="intro-text">
+            Explore superbikes, compare performance,
+            discover custom builds and plan your next ride.
+          </p>
+
+          <div class="stats">
+            <div>
+              <h4>01</h4>
+              <small>Choose your ride</small>
+            </div>
+            <div>
+              <h4>02</h4>
+              <small>Compare machines</small>
+            </div>
+            <div>
+              <h4>03</h4>
+              <small>Ride your way</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="login-card">
+            <p class="eyebrow">WELCOME RIDER</p>
+            <h2>Enter the Garage</h2>
+            <p class="muted">Your next adventure starts here.</p>
+
+            <form id="loginForm">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" id="email" class="form-control"
+                     placeholder="rider@example.com" required>
+
+              <label for="password" class="form-label mt-3">Password</label>
+              <input type="password" id="password" class="form-control"
+                     placeholder="Enter any demo password" required>
+
+              <button type="submit" class="btn login-btn w-100 mt-4">
+                ENTER GARAGE →
+              </button>
+            </form>
+
+            <p class="demo-note">
+              Demo login: enter any valid email and a password.
+              No account is created or stored.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="text-center py-3">
+      © 2026 SuperBikes Dream Garage | Built for the love of riding
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

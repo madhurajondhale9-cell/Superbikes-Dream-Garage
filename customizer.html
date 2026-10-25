@@ -1,0 +1,771 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bike Customizer | SuperBikes Dream Garage</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #101014;
+      --panel: #1b1b23;
+      --red: #ff354b;
+      --muted: #aaaab5;
+      --border: #373741;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background: #08080b;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      color: var(--red);
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .nav-link { color: #ddd !important; }
+
+    .nav-link:hover,
+    .nav-link.active { color: var(--red) !important; }
+
+    .hero {
+      padding: 48px 0 30px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 900;
+    }
+
+    .hero h1 span { color: var(--red); }
+    .muted { color: var(--muted); }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .preview {
+      position: relative;
+      min-height: 330px;
+      background:
+        radial-gradient(ellipse at center, #292932 0%, #181820 50%, #101014 100%);
+      border: 1px solid #393943;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .preview::after {
+      content: "";
+      position: absolute;
+      bottom: 43px;
+      left: 12%;
+      right: 12%;
+      height: 2px;
+      background: #4b4b55;
+      box-shadow: 0 5px 20px #000;
+    }
+
+    .bike-art {
+      width: 100%;
+      max-width: 650px;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 14px 14px #0009);
+    }
+
+    .paint-part {
+      fill: var(--paint);
+      transition: fill 0.25s ease;
+    }
+
+    .accent-part {
+      fill: var(--accent);
+      transition: fill 0.25s ease;
+    }
+
+    .preview-caption {
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    .section-title {
+      font-weight: 800;
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+    }
+
+    .field-label {
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .form-select,
+    .form-control {
+      background-color: #111117;
+      color: white;
+      border: 1px solid #444450;
+      padding: 12px;
+    }
+
+    .form-select:focus,
+    .form-control:focus {
+      background-color: #111117;
+      color: white;
+      border-color: var(--red);
+      box-shadow: 0 0 0 0.2rem #ff354b30;
+    }
+
+    .form-select option { background: #111117; }
+
+    .swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .swatch {
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      border: 3px solid #555;
+      cursor: pointer;
+      padding: 0;
+      outline-offset: 4px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .swatch:hover { transform: scale(1.08); }
+
+    .swatch[aria-pressed="true"] {
+      border-color: white;
+      box-shadow: 0 0 0 2px var(--red);
+    }
+
+    .swatch:focus-visible {
+      outline: 2px solid white;
+    }
+
+    .choice {
+      display: block;
+      position: relative;
+      cursor: pointer;
+      height: 100%;
+    }
+
+    .choice input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .choice span {
+      display: block;
+      height: 100%;
+      background: #22222b;
+      border: 1px solid #3b3b46;
+      border-radius: 11px;
+      padding: 13px;
+      transition: 0.2s;
+    }
+
+    .choice input:checked + span {
+      border-color: var(--red);
+      background: #351920;
+    }
+
+    .choice input:focus-visible + span {
+      outline: 2px solid white;
+      outline-offset: 3px;
+    }
+
+    .build-summary {
+      background: #111117;
+      border: 1px solid #363640;
+      border-radius: 12px;
+      padding: 17px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 10px 0;
+      border-bottom: 1px solid #303039;
+    }
+
+    .summary-row:last-child { border-bottom: none; }
+
+    .btn-red {
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-weight: 700;
+    }
+
+    .btn-red:hover {
+      background: #e52239;
+      color: white;
+    }
+
+    .btn-outline-light { border-radius: 10px; }
+
+    .note {
+      border-left: 3px solid var(--red);
+      background: #252027;
+      padding: 12px;
+      color: #ddd;
+      border-radius: 5px;
+      font-size: 13px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      padding: 22px 0;
+      margin-top: 55px;
+    }
+
+    @media (max-width: 576px) {
+      .panel { padding: 17px; }
+      .preview { min-height: 245px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand brand" href="index.html">
+      SUPERBIKES<span class="text-white"> DREAM GARAGE</span>
+    </a>
+
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="bikes.html">Explore Bikes</a></li>
+        <li class="nav-item"><a class="nav-link" href="compare.html">Compare</a></li>
+        <li class="nav-item"><a class="nav-link" href="finder.html">Bike Finder</a></li>
+        <li class="nav-item"><a class="nav-link" href="cost-calculator.html">Cost Calculator</a></li>
+        <li class="nav-item"><a class="nav-link active" href="customizer.html">Customizer</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        
+<li class="nav-item">
+  <a class="nav-link" href="community.html">Rider Hub</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="showrooms.html">Showrooms</a>
+</li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <p class="text-danger fw-bold mb-2">DESIGN YOUR DREAM MACHINE</p>
+    <h1>BUILD YOUR <span>BEAST.</span></h1>
+    <p class="muted mt-3">
+      Pick your colors. Choose your style. Make it yours.
+    </p>
+  </div>
+</header>
+
+<main class="container pb-4">
+  <div class="row g-4">
+
+    <!-- LIVE PREVIEW -->
+    <div class="col-lg-7">
+      <section class="panel">
+        <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+          <div>
+            <p class="text-danger small fw-bold mb-1">LIVE PREVIEW</p>
+            <h2 class="section-title mb-0" id="previewName">Street Phantom</h2>
+          </div>
+          <span class="badge text-bg-dark border border-secondary">CUSTOM BUILD</span>
+        </div>
+
+        <div class="preview" id="bikePreview" style="--paint:#17171d; --accent:#ff354b;">
+          <!-- Original illustrative motorcycle artwork -->
+          <svg class="bike-art" viewBox="0 0 720 380"
+            xmlns="http://www.w3.org/2000/svg" role="img"
+            aria-label="Illustrated motorcycle preview. Colors update with your choices.">
+
+            <defs>
+              <linearGradient id="tire" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#393941"/>
+                <stop offset="1" stop-color="#08080a"/>
+              </linearGradient>
+              <linearGradient id="metal" x1="0" y1="0" x2="0.7" y2="1">
+                <stop offset="0" stop-color="#aaaab3"/>
+                <stop offset="0.45" stop-color="#55555f"/>
+                <stop offset="1" stop-color="#22222a"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Wheels -->
+            <g stroke="#09090c" stroke-width="10">
+              <circle cx="160" cy="270" r="76" fill="url(#tire)"/>
+              <circle cx="560" cy="270" r="76" fill="url(#tire)"/>
+            </g>
+
+            <g fill="none" stroke="#666671" stroke-width="3">
+              <circle cx="160" cy="270" r="60"/>
+              <circle cx="560" cy="270" r="60"/>
+              <circle cx="160" cy="270" r="14"/>
+              <circle cx="560" cy="270" r="14"/>
+            </g>
+
+            <g stroke="#4d4d57" stroke-width="3">
+              <path d="M160 210 V330 M100 270 H220 M118 228 L202 312 M118 312 L202 228"/>
+              <path d="M560 210 V330 M500 270 H620 M518 228 L602 312 M518 312 L602 228"/>
+            </g>
+
+            <!-- Rear swingarm and chassis -->
+            <path d="M180 250 L300 205 L380 265 L225 280 Z"
+              fill="url(#metal)" stroke="#111116" stroke-width="5"/>
+
+            <path d="M282 206 L420 212 L480 265 L360 274 Z"
+              fill="#272730" stroke="#09090c" stroke-width="7"/>
+
+            <!-- Engine -->
+            <path d="M310 213 L365 190 L425 205 L441 258 L397 280 L335 267 Z"
+              fill="url(#metal)" stroke="#08080b" stroke-width="6"/>
+
+            <path d="M337 223 L402 216 L415 246 L393 261 L350 253 Z"
+              fill="#19191f" stroke="#777782" stroke-width="3"/>
+
+            <g stroke="#777782" stroke-width="4">
+              <path d="M348 226 L356 251"/>
+              <path d="M363 222 L371 256"/>
+              <path d="M378 220 L386 255"/>
+              <path d="M393 221 L400 250"/>
+            </g>
+
+            <!-- Exhaust -->
+            <path d="M390 266 L454 285 L502 281 L515 294 L451 307 L405 289 Z"
+              fill="url(#metal)" stroke="#08080b" stroke-width="5"/>
+
+            <!-- Front fork -->
+            <path d="M476 176 L548 250" fill="none"
+              stroke="#b8b8c0" stroke-width="12" stroke-linecap="round"/>
+            <path d="M494 173 L565 245" fill="none"
+              stroke="#33333b" stroke-width="5" stroke-linecap="round"/>
+
+            <!-- Rear body panels -->
+            <path class="paint-part"
+              d="M192 190 L235 158 L320 166 L348 206 L296 230 L221 226 L178 250 L175 218 Z"
+              stroke="#08080b" stroke-width="7" stroke-linejoin="round"/>
+
+            <!-- Main tank -->
+            <path class="paint-part"
+              d="M286 163 L340 117 L419 121 L470 160 L453 202 L380 216 L331 199 Z"
+              stroke="#08080b" stroke-width="8" stroke-linejoin="round"/>
+
+            <!-- Tank highlight -->
+            <path d="M315 160 L352 131 L410 134"
+              fill="none" stroke="#ffffff" stroke-opacity=".18"
+              stroke-width="6" stroke-linecap="round"/>
+
+            <!-- Front fairing -->
+            <path class="paint-part"
+              d="M435 147 L490 140 L531 167 L550 205 L525 235 L480 218 L448 184 Z"
+              stroke="#08080b" stroke-width="7" stroke-linejoin="round"/>
+
+            <!-- Windscreen -->
+            <path d="M443 145 L453 108 L488 103 L499 143 Z"
+              fill="#222b38" stroke="#08080b" stroke-width="7"/>
+
+            <!-- Seat -->
+            <path d="M239 161 L275 143 L329 151 L350 171 L312 184 L264 180 Z"
+              fill="#09090d" stroke="#08080b" stroke-width="6"/>
+
+            <!-- Tail accents -->
+            <path class="accent-part"
+              d="M193 191 L232 163 L249 165 L220 195 Z"/>
+
+            <!-- Front accent -->
+            <path class="accent-part"
+              d="M473 166 L513 175 L531 196 L516 199 L487 186 Z"/>
+
+            <!-- Accent stripe on tank -->
+            <path class="accent-part"
+              d="M330 174 L379 158 L414 162 L382 178 L345 189 Z"/>
+
+            <!-- Headlight -->
+            <path d="M519 205 L545 207 L535 222 L513 218 Z"
+              fill="#f4f2d9" stroke="#08080b" stroke-width="4"/>
+
+            <!-- Handlebar and mirrors -->
+            <path d="M457 126 L490 116 L511 125"
+              fill="none" stroke="#aaaab3" stroke-width="6" stroke-linecap="round"/>
+            <path d="M467 125 L450 98 L435 93"
+              fill="none" stroke="#777782" stroke-width="5" stroke-linecap="round"/>
+            <path d="M426 90 L449 84 L455 95 L435 100 Z"
+              fill="#181820" stroke="#666671" stroke-width="3"/>
+
+            <!-- Footpeg and small details -->
+            <path d="M365 278 L350 295 L378 295"
+              fill="none" stroke="#aaaab3" stroke-width="6" stroke-linecap="round"/>
+            <path d="M302 214 L279 232 L306 240"
+              fill="none" stroke="#aaaab3" stroke-width="5"/>
+
+            <!-- Ground shadows -->
+            <ellipse cx="360" cy="348" rx="245" ry="12"
+              fill="#000" opacity=".45"/>
+          </svg>
+        </div>
+
+        <p class="preview-caption">
+          Original illustrative preview — not an exact motorcycle model or manufacturer design.
+        </p>
+      </section>
+
+      <section class="panel mt-4">
+        <h3 class="section-title">YOUR BUILD SUMMARY</h3>
+
+        <div class="build-summary">
+          <div class="summary-row">
+            <span class="muted">Build name</span>
+            <strong id="summaryName">Street Phantom</strong>
+          </div>
+          <div class="summary-row">
+            <span class="muted">Paint color</span>
+            <strong id="summaryPaint">Midnight Black</strong>
+          </div>
+          <div class="summary-row">
+            <span class="muted">Accent color</span>
+            <strong id="summaryAccent">Racing Red</strong>
+          </div>
+          <div class="summary-row">
+            <span class="muted">Style</span>
+            <strong id="summaryStyle">Stealth</strong>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-red w-100 mt-3" id="copyBuild">
+          COPY MY BUILD DETAILS
+        </button>
+        <p id="copyMessage" class="small muted mt-3 mb-0" aria-live="polite"></p>
+      </section>
+    </div>
+
+    <!-- CUSTOMIZATION CONTROLS -->
+    <div class="col-lg-5">
+      <section class="panel">
+        <h2 class="section-title">01. Customize Your Ride</h2>
+
+        <div class="mb-4">
+          <label for="buildName" class="field-label">Name your build</label>
+          <input class="form-control" id="buildName"
+            maxlength="35" value="Street Phantom"
+            placeholder="e.g. Night Hunter">
+        </div>
+
+        <div class="mb-4">
+          <label for="model" class="field-label">Design inspiration</label>
+          <select class="form-select" id="model">
+            <option value="street">Streetfighter</option>
+            <option value="sport">Sportbike</option>
+            <option value="touring">Touring</option>
+          </select>
+          <small class="muted">This changes the build label, not the illustrated motorcycle shape.</small>
+        </div>
+
+        <div class="mb-4">
+          <span class="field-label">02. Choose paint color</span>
+          <div class="swatches" id="paintSwatches">
+            <button type="button" class="swatch"
+              style="background:#17171d" data-color="#17171d"
+              data-name="Midnight Black" aria-label="Midnight Black"
+              aria-pressed="true"></button>
+
+            <button type="button" class="swatch"
+              style="background:#126b39" data-color="#126b39"
+              data-name="Racing Green" aria-label="Racing Green"
+              aria-pressed="false"></button>
+
+            <button type="button" class="swatch"
+              style="background:#173d86" data-color="#173d86"
+              data-name="Electric Blue" aria-label="Electric Blue"
+              aria-pressed="false"></button>
+
+            <button type="button" class="swatch"
+              style="background:#761b32" data-color="#761b32"
+              data-name="Burgundy" aria-label="Burgundy"
+              aria-pressed="false"></button>
+
+            <button type="button" class="swatch"
+              style="background:#d8d8dc" data-color="#d8d8dc"
+              data-name="Pearl White" aria-label="Pearl White"
+              aria-pressed="false"></button>
+
+            <button type="button" class="swatch"
+              style="background:#c9a044" data-color="#c9a044"
+              data-name="Gold" aria-label="Gold"
+              aria-pressed="false"></button>
+          </div>
+          <p class="muted small mt-3 mb-0">
+            Selected: <strong id="paintName">Midnight Black</strong>
+          </p>
+        </div>
+
+        <div class="mb-4">
+          <span class="field-label">03. Choose accent color</span>
+          <div class="swatches" id="accentSwatches">
+            <button type="button" class="swatch"
+              style="background:#ff354b" data-color="#ff354b"
+              data-name="Racing Red" aria-label="Racing Red"
+              aria-pressed="true"></button>
+
+            <button type="button" class="swatch"
+              style="background:#a8ff36" data-color="#a8ff36"
+              data-name="Neon Green" aria-label="Neon Green"
+              aria-pressed="false"></button>
+
+            <button type="button" class="swatch"
+              style="background:#56a8ff" data-color="#56a8ff"
+              data-name="Ice Blue" aria-label="Ice Blue"
+              aria-pressed="false"></button>
+
+            <button type="button" class="swatch"
+              style="background:#f2f2f2" data-color="#f2f2f2"
+              data-name="White" aria-label="White"
+              aria-pressed="false"></button>
+
+            <button type="button" class="swatch"
+              style="background:#ffad33" data-color="#ffad33"
+              data-name="Amber" aria-label="Amber"
+              aria-pressed="false"></button>
+          </div>
+          <p class="muted small mt-3 mb-0">
+            Selected: <strong id="accentName">Racing Red</strong>
+          </p>
+        </div>
+
+        <div class="mb-4">
+          <span class="field-label">04. Pick your vibe</span>
+          <div class="row g-2">
+            <div class="col-6">
+              <label class="choice">
+                <input type="radio" name="style" value="Stealth" checked>
+                <span>
+                  <strong>😈 Stealth</strong>
+                  <small class="muted d-block">Dark & intimidating</small>
+                </span>
+              </label>
+            </div>
+            <div class="col-6">
+              <label class="choice">
+                <input type="radio" name="style" value="Track Beast">
+                <span>
+                  <strong>🏁 Track Beast</strong>
+                  <small class="muted d-block">Sporty & aggressive</small>
+                </span>
+              </label>
+            </div>
+            <div class="col-6">
+              <label class="choice">
+                <input type="radio" name="style" value="Street Icon">
+                <span>
+                  <strong>⚡ Street Icon</strong>
+                  <small class="muted d-block">Bold & modern</small>
+                </span>
+              </label>
+            </div>
+            <div class="col-6">
+              <label class="choice">
+                <input type="radio" name="style" value="Luxury">
+                <span>
+                  <strong>👑 Luxury</strong>
+                  <small class="muted d-block">Premium & refined</small>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-outline-light w-100" id="resetBuild">
+          RESET CUSTOMIZATION
+        </button>
+      </section>
+
+      <div class="note mt-4">
+        <strong>Design studio note:</strong> This is a visual concept tool.
+        It doesn't modify a real motorcycle or confirm that a paint job or accessory
+        is road-legal. Check applicable rules before modifying a real bike.
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p class="mb-1">SuperBikes Dream Garage 🏍️</p>
+    <small>Imagine it. Customize it. Own your style.</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const preview = document.getElementById("bikePreview");
+
+  const state = {
+    name: "Street Phantom",
+    model: "street",
+    paint: "#17171d",
+    paintName: "Midnight Black",
+    accent: "#ff354b",
+    accentName: "Racing Red",
+    style: "Stealth"
+  };
+
+  const modelNames = {
+    street: "Streetfighter",
+    sport: "Sportbike",
+    touring: "Touring Bike"
+  };
+
+  function updateBuild() {
+    state.name = document.getElementById("buildName").value.trim()
+      || "Unnamed Build";
+
+    state.model = document.getElementById("model").value;
+
+    state.style = document.querySelector(
+      'input[name="style"]:checked'
+    ).value;
+
+    preview.style.setProperty("--paint", state.paint);
+    preview.style.setProperty("--accent", state.accent);
+
+    document.getElementById("previewName").textContent = state.name;
+    document.getElementById("summaryName").textContent = state.name;
+    document.getElementById("summaryPaint").textContent = state.paintName;
+    document.getElementById("summaryAccent").textContent = state.accentName;
+    document.getElementById("summaryStyle").textContent = state.style;
+    document.getElementById("paintName").textContent = state.paintName;
+    document.getElementById("accentName").textContent = state.accentName;
+
+    document.getElementById("copyMessage").textContent = "";
+  }
+
+  function setupSwatches(containerId, colorKey, nameKey) {
+    document.querySelectorAll(`#${containerId} .swatch`).forEach(button => {
+      button.addEventListener("click", () => {
+        state[colorKey] = button.dataset.color;
+        state[nameKey] = button.dataset.name;
+
+        document.querySelectorAll(`#${containerId} .swatch`)
+          .forEach(item => {
+            item.setAttribute(
+              "aria-pressed",
+              String(item === button)
+            );
+          });
+
+        updateBuild();
+      });
+    });
+  }
+
+  setupSwatches("paintSwatches", "paint", "paintName");
+  setupSwatches("accentSwatches", "accent", "accentName");
+
+  document.getElementById("buildName").addEventListener("input", updateBuild);
+  document.getElementById("model").addEventListener("change", updateBuild);
+
+  document.querySelectorAll('input[name="style"]').forEach(input => {
+    input.addEventListener("change", updateBuild);
+  });
+
+  document.getElementById("resetBuild").addEventListener("click", () => {
+    state.name = "Street Phantom";
+    state.model = "street";
+    state.paint = "#17171d";
+    state.paintName = "Midnight Black";
+    state.accent = "#ff354b";
+    state.accentName = "Racing Red";
+    state.style = "Stealth";
+
+    document.getElementById("buildName").value = state.name;
+    document.getElementById("model").value = state.model;
+    document.querySelector('input[name="style"][value="Stealth"]').checked = true;
+
+    document.querySelectorAll("#paintSwatches .swatch").forEach(button => {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.name === state.paintName)
+      );
+    });
+
+    document.querySelectorAll("#accentSwatches .swatch").forEach(button => {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.name === state.accentName)
+      );
+    });
+
+    updateBuild();
+  });
+
+  document.getElementById("copyBuild").addEventListener("click", async () => {
+    const details =
+      "MY SUPERBIKE CUSTOM BUILD\n" +
+      "Build name: " + state.name + "\n" +
+      "Design inspiration: " + modelNames[state.model] + "\n" +
+      "Paint color: " + state.paintName + "\n" +
+      "Accent color: " + state.accentName + "\n" +
+      "Style: " + state.style;
+
+    const message = document.getElementById("copyMessage");
+
+    try {
+      await navigator.clipboard.writeText(details);
+      message.textContent = "Build details copied! Paste them wherever you like.";
+    } catch (error) {
+      message.textContent = "Clipboard access isn't available here. You can copy the details from the summary above manually.";
+    }
+  });
+
+  updateBuild();
+</script>
+
+</body>
+</html>

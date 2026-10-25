@@ -2,223 +2,505 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Contact Us | SuperBikes Dream Garage</title>
+  <title>Contact Us | SuperBikes Dream Garage</title>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root {
+      --red: #ff3030;
+      --dark: #101010;
+      --card: #191919;
+      --muted: #b8b8b8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--dark);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background: #080808;
+      border-bottom: 1px solid #303030;
+    }
+
+    .navbar-brand {
+      color: var(--red) !important;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .nav-link {
+      color: #ddd !important;
+      font-size: 14px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--red) !important;
+    }
+
+    .hero {
+      padding: 75px 20px;
+      text-align: center;
+      background:
+        linear-gradient(120deg, #310707, #101010 70%);
+      border-bottom: 1px solid #333;
+    }
+
+    .hero-tag {
+      color: #ff6868;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin: 15px 0;
+    }
+
+    .hero h1 span {
+      color: var(--red);
+    }
+
+    .hero p {
+      color: #c5c5c5;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .contact-section {
+      padding: 65px 0;
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 900;
+    }
+
+    .section-title span {
+      color: var(--red);
+    }
+
+    .section-description {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .contact-card,
+    .form-card {
+      height: 100%;
+      background: var(--card);
+      border: 1px solid #343434;
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 17px 0;
+      border-bottom: 1px solid #333;
+    }
+
+    .contact-item:last-child {
+      border-bottom: none;
+    }
+
+    .contact-icon {
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #ff30301c;
+      border: 1px solid #ff303055;
+      border-radius: 10px;
+      font-size: 21px;
+    }
+
+    .contact-item h3 {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .contact-item p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .contact-item a {
+      color: #ff6666;
+      text-decoration: none;
+    }
+
+    .contact-item a:hover {
+      text-decoration: underline;
+    }
+
+    .form-label {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .form-control,
+    .form-select {
+      background: #101010;
+      color: white;
+      border: 1px solid #444;
+      padding: 12px;
+      border-radius: 7px;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      background: #101010;
+      color: white;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px #ff303022;
+    }
+
+    .form-control::placeholder {
+      color: #888;
+    }
+
+    .form-select option {
+      background: #101010;
+      color: white;
+    }
+
+    textarea.form-control {
+      min-height: 145px;
+      resize: vertical;
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: white;
+      border: 1px solid var(--red);
+      padding: 12px 22px;
+      font-weight: bold;
+      border-radius: 7px;
+      transition: 0.2s;
+    }
+
+    .btn-red:hover {
+      background: #d82020;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .community-banner {
+      background: linear-gradient(120deg, #350909, #191919);
+      border: 1px solid #4a2929;
+      border-radius: 14px;
+      padding: 30px;
+    }
+
+    .community-banner h2 {
+      font-weight: 900;
+    }
+
+    .community-banner p {
+      color: #c4c4c4;
+      margin-bottom: 0;
+      line-height: 1.7;
+    }
+
+    .btn-outline-light {
+      padding: 11px 18px;
+      font-weight: bold;
+    }
+
+    #formMessage {
+      display: none;
+      background: #12331e;
+      border: 1px solid #287b45;
+      color: #baf3ca;
+      border-radius: 8px;
+      padding: 14px;
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    footer {
+      background: #070707;
+      border-top: 1px solid #333;
+      color: #888;
+      text-align: center;
+      padding: 25px 12px;
+      margin-top: 15px;
+    }
+
+    footer span {
+      color: var(--red);
+    }
+
+    @media (max-width: 576px) {
+      .contact-card,
+      .form-card {
+        padding: 21px;
+      }
+
+      .hero {
+        padding: 55px 16px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">
-            SUPERBIKES <span class="text-danger">DREAM GARAGE</span>
-        </a>
+      <a class="navbar-brand" href="index.html">SDG 🏍️</a>
 
-        <button class="navbar-toggler" type="button"
-                data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-                aria-controls="mainNavbar" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+      <button class="navbar-toggler" type="button"
+        data-bs-toggle="collapse" data-bs-target="#mainNav"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="bikes.html">Explore Bikes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="compare.html">Compare Bikes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="contact.html">Contact</a>
-                </li>
-            </ul>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="bikes.html">Bikes</a></li>
+          <li class="nav-item"><a class="nav-link" href="compare.html">Compare</a></li>
+          <li class="nav-item"><a class="nav-link" href="finder.html">Bike Finder</a></li>
+          <li class="nav-item"><a class="nav-link" href="cost-calculator.html">Cost Calculator</a></li>
+          <li class="nav-item"><a class="nav-link" href="customizer.html">Customizer</a></li>
+          <li class="nav-item"><a class="nav-link" href="showrooms.html">Showrooms</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-tag">We'd Love to Hear From You</div>
+
+      <h1>Let's <span>Connect</span></h1>
+
+      <p>
+        Have a question about a superbike? Want to suggest a new feature,
+        share feedback, or talk motorcycles? Send us a message.
+      </p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="row g-4">
+
+          <!-- Contact Information -->
+          <div class="col-lg-5">
+            <div class="contact-card">
+              <h2 class="section-title">Get In <span>Touch</span></h2>
+
+              <p class="section-description mt-3">
+                SuperBikes Dream Garage is built for people who love
+                motorcycles. Your feedback helps us improve the experience.
+              </p>
+
+              <div class="contact-item">
+                <div class="contact-icon">🏍️</div>
+                <div>
+                  <h3>Motorcycle Enquiries</h3>
+                  <p>
+                    Questions about bikes, comparisons, specifications,
+                    and riding experiences.
+                  </p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">💡</div>
+                <div>
+                  <h3>Suggestions & Feedback</h3>
+                  <p>
+                    Recommend new bikes, features, improvements,
+                    or ideas for the website.
+                  </p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">🛠️</div>
+                <div>
+                  <h3>Website Support</h3>
+                  <p>
+                    Found an error or a broken link? Tell us so we can
+                    make the website better.
+                  </p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">🌐</div>
+                <div>
+                  <h3>Explore the Garage</h3>
+                  <p>
+                    <a href="bikes.html">Explore Bikes</a> ·
+                    <a href="compare.html">Compare Bikes</a> ·
+                    <a href="showrooms.html">Find Showrooms</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="col-lg-7">
+            <div class="form-card">
+              <h2 class="section-title">Send a <span>Message</span></h2>
+
+              <p class="section-description mt-3 mb-4">
+                Fill out the form below to share your thoughts with us.
+              </p>
+
+              <form id="contactForm">
+                <div class="row g-3">
+
+                  <div class="col-md-6">
+                    <label for="name" class="form-label">Your Name *</label>
+                    <input type="text" id="name" class="form-control"
+                      placeholder="Enter your name" required maxlength="80">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="email" class="form-label">Email Address *</label>
+                    <input type="email" id="email" class="form-control"
+                      placeholder="you@example.com" required maxlength="120">
+                  </div>
+
+                  <div class="col-12">
+                    <label for="subject" class="form-label">Subject *</label>
+                    <select id="subject" class="form-select" required>
+                      <option value="">Choose a subject</option>
+                      <option value="Bike Enquiry">Bike Enquiry</option>
+                      <option value="Website Feedback">Website Feedback</option>
+                      <option value="New Bike Suggestion">New Bike Suggestion</option>
+                      <option value="Technical Issue">Technical Issue</option>
+                      <option value="Collaboration">Collaboration</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="message" class="form-label">Your Message *</label>
+                    <textarea id="message" class="form-control"
+                      placeholder="Write your message here..."
+                      required minlength="5" maxlength="1500"></textarea>
+                    <small class="text-secondary">
+                      Maximum 1500 characters.
+                    </small>
+                  </div>
+
+                  <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-red w-100">
+                      SEND MESSAGE ↗
+                    </button>
+                  </div>
+
+                </div>
+              </form>
+
+              <div id="formMessage" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+
         </div>
-    </div>
-</nav>
+      </div>
+    </section>
 
-<!-- HERO SECTION -->
-<section class="container-fluid bg-dark text-white text-center py-5">
-    <div class="container py-4">
-        <p class="text-danger fw-bold text-uppercase">Let's Connect</p>
-
-        <h1 class="display-4 fw-bold">
-            CONTACT <span class="text-danger">US</span>
-        </h1>
-
-        <p class="lead text-light">
-            Have a question, suggestion, or a dream bike to share?
-            We'd love to hear from you.
-        </p>
-    </div>
-</section>
-
-<!-- CONTACT CONTENT -->
-<section class="container py-5">
-    <div class="row g-5">
-
-        <!-- CONTACT INFORMATION -->
-        <div class="col-lg-5">
-            <h2 class="fw-bold mb-4">
-                LET'S TALK <span class="text-danger">BIKES</span>
-            </h2>
-
-            <p class="text-secondary mb-4">
-                SuperBikes Dream Garage is a space for motorcycle enthusiasts
-                to explore superbikes, compare features, and celebrate the
-                passion for riding.
+    <!-- Community Invitation -->
+    <section class="container pb-5">
+      <div class="community-banner">
+        <div class="row align-items-center g-4">
+          <div class="col-md-8">
+            <h2>Ride Together. <span style="color:#ff3030">Learn Together.</span></h2>
+            <p class="mt-2">
+              Every rider has a story. Our upcoming Rider Community will
+              provide a space for reviews, ownership tips, bike suggestions,
+              and safety discussions.
             </p>
+          </div>
 
-            <div class="card bg-dark text-white border-secondary mb-3">
-                <div class="card-body">
-                    <h5 class="text-danger">Our Mission</h5>
-                    <p class="mb-0">
-                        To help enthusiasts discover performance motorcycles
-                        and make informed choices.
-                    </p>
-                </div>
-            </div>
-
-            <div class="card bg-dark text-white border-secondary mb-3">
-                <div class="card-body">
-                    <h5 class="text-danger">Our Community</h5>
-                    <p class="mb-0">
-                        A place for riders, learners, and motorcycle fans
-                        who share a passion for two wheels.
-                    </p>
-                </div>
-            </div>
-
-            <div class="card bg-dark text-white border-secondary">
-                <div class="card-body">
-                    <h5 class="text-danger">Built for Indian Roads</h5>
-                    <p class="mb-0">
-                        Explore your dream machine while remembering that
-                        safe and responsible riding always comes first.
-                    </p>
-                </div>
-            </div>
+          <div class="col-md-4 text-md-end">
+            <a href="community.html" class="btn btn-outline-light">
+              EXPLORE RIDER HUB →
+            </a>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <!-- CONTACT FORM -->
-        <div class="col-lg-7">
-            <div class="card bg-dark text-white border-secondary shadow">
-                <div class="card-body p-4 p-md-5">
+  </main>
 
-                    <h2 class="fw-bold mb-2">
-                        SEND US A <span class="text-danger">MESSAGE</span>
-                    </h2>
+  <!-- Footer -->
+  <footer>
+    <p class="mb-1">Built for riders. Designed for the road. 🏁</p>
+    <p class="mb-0">
+      © 2026 <span>SuperBikes Dream Garage</span> · Ride Responsibly
+    </p>
+  </footer>
 
-                    <p class="text-secondary mb-4">
-                        Fill in the details below.
-                    </p>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-                    <form id="contactForm">
-
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="name"
-                                   placeholder="Enter your name" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="email"
-                                   placeholder="Enter your email" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="subject" class="form-label">Subject</label>
-                            <select class="form-select" id="subject" required>
-                                <option value="">Choose a subject</option>
-                                <option value="bike enquiry">Bike Enquiry</option>
-                                <option value="suggestion">Suggestion</option>
-                                <option value="website feedback">Website Feedback</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Your Message</label>
-                            <textarea class="form-control" id="message" rows="5"
-                                      placeholder="Write your message here..."
-                                      required></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-danger btn-lg w-100">
-                            Send Message
-                        </button>
-
-                        <p id="formResponse" class="mt-3 mb-0"
-                           role="status" aria-live="polite"></p>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<!-- CALL TO ACTION -->
-<section class="container-fluid bg-black text-white text-center py-5">
-    <div class="container">
-        <h2 class="fw-bold">
-            KEEP FOLLOWING <span class="text-danger">YOUR PASSION</span>
-        </h2>
-
-        <p class="text-light">
-            Your dream bike might be just one discovery away.
-        </p>
-
-        <a href="bikes.html" class="btn btn-outline-danger btn-lg">
-            Explore Bikes
-        </a>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-dark text-white text-center py-3">
-    <p class="mb-1">&copy; 2026 SuperBikes Dream Garage</p>
-    <small class="text-light">Built for Indian Roads. Driven by Passion.</small>
-</footer>
-
-<!-- BOOTSTRAP JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- CONTACT FORM VALIDATION -->
-<script>
+  <script>
     const contactForm = document.getElementById("contactForm");
-    const formResponse = document.getElementById("formResponse");
+    const formMessage = document.getElementById("formMessage");
 
     contactForm.addEventListener("submit", function(event) {
-        event.preventDefault();
+      event.preventDefault();
 
-        if (!contactForm.checkValidity()) {
-            contactForm.reportValidity();
-            return;
-        }
+      if (!contactForm.checkValidity()) {
+        contactForm.reportValidity();
+        return;
+      }
 
-        formResponse.textContent =
-            "Thank you for your interest! This demo form is validated, but message delivery has not been configured.";
+      const name = document.getElementById("name").value.trim();
 
-        formResponse.className = "mt-3 mb-0 text-success";
+      formMessage.style.display = "block";
+      formMessage.textContent =
+        "Thanks, " + name + "! Your form has been validated successfully. " +
+        "This is a static demo, so your message has not been emailed or sent to a server.";
 
-        contactForm.reset();
+      contactForm.reset();
+      formMessage.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
     });
-</script>
+  </script>
 
 </body>
 </html>

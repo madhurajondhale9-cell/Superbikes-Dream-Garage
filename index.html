@@ -1,198 +1,111 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>SuperBikes Dream Garage | Indian Roads</title>
+    <title>Home | SuperBikes Dream Garage</title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Our custom CSS -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark garage-nav">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark garage-navbar">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.html">
-                 DREAM GARAGE
+                <span class="brand-icon">M</span>
+                SUPERBIKES <span class="text-danger">DREAM GARAGE</span>
             </a>
 
-            <button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#mainNav"
-                    aria-controls="mainNav"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
+            <button class="navbar-togagler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="mainNav">
+            <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link active" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="bikes.html">Explore Bikes</a>
+                        <a class="nav-link" href="bikes.html">Bikes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="compare.html">Compare</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">About & Contact</a>
+                        <a class="nav-link" href="finder.html">Bike Finder</a>
                     </li>
+                    <li class="nav-item"><a class="nav-link active" href="cost-calculator.html">Cost Calculator</a></li>
+                    <li class="nav-item">
+                        <li class="nav-item">
+  <a class="nav-link" href="customizer.html">Customisation</a>
+</li>
+                        <a class="nav-link" href="showrooms.html">Showroom</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact Us</a>
+                    </li>
+                    
+<li class="nav-item">
+  <a class="nav-link" href="community.html">Rider Hub</a>
+</li>
+
+
+
+
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="hero-section">
-        <div class="container">
-            <div class="row align-items-center min-vh-75">
-                <div class="col-lg-7 hero-content">
-                    <p class="eyebrow">THE ULTIMATE RIDER'S DESTINATION</p>
-
-                    <h1>
-                        YOUR DREAM.<br>
-                        YOUR MACHINE.<br>
-                        <span class="text-red">YOUR ROAD.</span>
-                    </h1>
-
-                    <p class="hero-description">
-                        Discover the world's finest superbikes,
-                        compare their performance, and find the
-                        right machine for Indian roads.
-                    </p>
-
-                    <a href="bikes.html" class="btn btn-danger btn-lg">
-                        EXPLORE THE GARAGE →
-                    </a>
-
-                    <a href="compare.html" class="btn btn-outline-light btn-lg ms-2">
-                        COMPARE BIKES
-                    </a>
-                </div>
-            </div>
-
-            <div class="hero-bottom">
-                <span>BUILT TO FLY.</span>
-                <span>MADE FOR THE RIDE.</span>
-            </div>
-        </div>
-    </header>
-
-    <!-- Intro Section -->
-    <section class="section-padding">
-        <div class="container">
-            <p class="eyebrow">WELCOME TO YOUR GARAGE</p>
-
-            <h2 class="section-title">
-                MORE THAN JUST <span class="text-red">MACHINES.</span>
-            </h2>
-
-            <p class="section-description">
-                A destination for motorcycle enthusiasts who want
-                to explore performance, understand specifications,
-                and discover which superbikes suit their riding needs.
-            </p>
-
-            <div class="row g-4 mt-3">
-
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">01</div>
-                        <h3>Explore Machines</h3>
-                        <p>
-                            Discover superbikes, their specifications,
-                            engine performance, and key features.
-                        </p>
-                        <a href="bikes.html">DISCOVER BIKES →</a>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">02</div>
-                        <h3>Compare Performance</h3>
-                        <p>
-                            Compare important specifications and
-                            understand the differences between bikes.
-                        </p>
-                        <a href="compare.html">COMPARE NOW →</a>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">03</div>
-                        <h3>Think Indian Roads</h3>
-                        <p>
-                            Explore comfort, practicality, ground
-                            clearance, and everyday riding needs.
-                        </p>
-                        <a href="bikes.html">FIND YOUR RIDE →</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Bike -->
-    <section class="featured-section">
+    <!-- HERO SECTION -->
+    <section class="home-hero">
         <div class="container">
             <div class="row align-items-center g-5">
 
-                <div class="col-lg-6">
-                    <img
-                        src="https://www.totalmotorcycle.com/wp-content/uploads/2022/10/2023-Kawasaki-Ninja-ZX-10RR-ABS2.jpg"
-                        alt="Sport motorcycle"
-                        class="img-fluid featured-image">
-                </div>
+                <div class="col-lg-7">
+                    <p class="section-label">BUILT FOR INDIAN ROADS</p>
 
-                <div class="col-lg-6">
-                    <p class="eyebrow">IN THE SPOTLIGHT</p>
+                    <h1 class="hero-title">
+                        FIND YOUR<br>
+                        <span>NEXT BEAST.</span>
+                    </h1>
 
-                    <h2 class="section-title">
-                        THE THRILL<br>
-                        IS IN THE <span class="text-red">DETAILS.</span>
-                    </h2>
-
-                    <p class="section-description">
-                        Horsepower tells only part of the story.
-                        Riding position, weight, road conditions,
-                        running costs, and rider experience matter too.
-                        Discover the machine that matches your ambitions.
+                    <p class="hero-description">
+                        Discover powerful superbikes, compare performance,
+                        explore custom builds, and find the machine that
+                        matches your riding style.
                     </p>
 
-                    <a href="bikes.html" class="btn btn-danger">
-                        VIEW THE COLLECTION →
-                    </a>
-                </div>
+                    <div class="d-flex flex-wrap gap-3 mt-4">
+                        <a href="bikes.html" class="btn btn-danger btn-lg">
+                            EXPLORE GARAGE →
+                        </a>
 
-            </div>
-        </div>
-    </section>
+                        <a href="compare.html" class="btn btn-outline-light btn-lg">
+                            COMPARE BIKES
+                        </a>
+                    </div>
 
-    <!-- Footer -->
-    <footer class="garage-footer">
-        <div class="container d-flex flex-column flex-md-row
-                    justify-content-between gap-2">
-            <p class="mb-0">© 2026 SuperBikes Dream Garage</p>
-            <p class="mb-0">BUILT FOR PASSION. BUILT FOR INDIAN ROADS.</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/script.js"></script>
-
-</body>
-</html>
+                    <div class="hero-stats">
+                        <div>
+                            <h3>01</h3>
+                            <p>Find Your Ride</p>
+                        </div>
+                        <div>
+                            <h3>02</h3>
+                            <p>Compare Machines</p>
+                        </div>
+                        <div>
+                            <h3>03</h3>
+                            <p>Ride Your Way</p>
+                            </div>

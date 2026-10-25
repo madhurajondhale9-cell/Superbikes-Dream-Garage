@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Bike Finder | SuperBikes Dream Garage</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #101014;
+      --panel: #1a1a22;
+      --red: #ff354b;
+      --muted: #aaaab5;
+    }
+
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background: #08080b;
+      border-bottom: 1px solid #303039;
+    }
+
+    .brand {
+      color: var(--red);
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .nav-link {
+      color: #ddd !important;
+    }
+
+    .nav-link:hover {
+      color: var(--red) !important;
+    }
+
+    .hero {
+      padding: 65px 0 40px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+    }
+
+    .hero h1 span {
+      color: var(--red);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .finder-card, .result-card {
+      background: var(--panel);
+      border: 1px solid #34343e;
+      border-radius: 18px;
+      padding: 28px;
+    }
+
+    .question {
+      margin-bottom: 28px;
+    }
+
+    .question h5 {
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .option {
+      display: block;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .option input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .option span {
+      display: block;
+      background: #22222b;
+      border: 1px solid #3a3a46;
+      border-radius: 12px;
+      padding: 14px;
+      transition: 0.2s;
+      height: 100%;
+    }
+
+    .option span:hover {
+      border-color: var(--red);
+    }
+
+    .option input:checked + span {
+      border-color: var(--red);
+      background: #351920;
+      box-shadow: 0 0 0 1px var(--red);
+    }
+
+    .option input:focus-visible + span {
+      outline: 2px solid white;
+      outline-offset: 3px;
+    }
+
+    .option strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .option small {
+      color: var(--muted);
+    }
+
+    .btn-red {
+      background: var(--red);
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 13px 22px;
+      border-radius: 10px;
+    }
+
+    .btn-red:hover {
+      background: #e52239;
+      color: white;
+    }
+
+    .result-card {
+      display: none;
+      margin-top: 25px;
+      border-color: var(--red);
+    }
+
+    .result-card.show {
+      display: block;
+    }
+
+    .match-number {
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: var(--red);
+    }
+
+    .match-track {
+      height: 9px;
+      background: #383842;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .match-fill {
+      height: 100%;
+      width: 0;
+      background: var(--red);
+      transition: width 0.6s;
+    }
+
+    .result-tag {
+      display: inline-block;
+      background: #302028;
+      color: #ff8b99;
+      padding: 6px 11px;
+      border-radius: 30px;
+      font-size: 13px;
+      margin: 4px 3px 4px 0;
+    }
+
+    .reason {
+      padding: 12px 0;
+      border-bottom: 1px solid #34343e;
+    }
+
+    .reason:last-child {
+      border-bottom: none;
+    }
+
+    footer {
+      border-top: 1px solid #303039;
+      color: var(--muted);
+      padding: 22px 0;
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    @media (max-width: 576px) {
+      .finder-card, .result-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand brand" href="index.html">
+      SUPERBIKES<span class="text-white"> DREAM GARAGE</span>
+    </a>
+
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="bikes.html">Explore Bikes</a></li>
+        <li class="nav-item"><a class="nav-link" href="compare.html">Compare</a></li>
+        <li class="nav-item"><a class="nav-link active" href="finder.html">Bike Finder</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        
+<li class="nav-item">
+  <a class="nav-link" href="community.html">Rider Hub</a>
+</li>
+<li class="nav-item"><a class="nav-link active" href="cost-calculator.html">Cost Calculator</a></li>
+<li class="nav-item">
+  <a class="nav-link" href="showrooms.html">Showrooms</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="customizer.html">Customisation</a>
+</li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <p class="text-danger fw-bold mb-2">YOUR RIDE. YOUR RULES.</p>
+    <h1>FIND YOUR <span>PERFECT BIKE.</span></h1>
+    <p class="muted mt-3">
+      Tell us what you need. We'll help you find your next machine.
+    </p>
+  </div>
+</header>
+
+<main class="container pb-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+
+      <form id="finderForm" class="finder-card">
+
+        <div class="question">
+          <h5>01. What's your budget?</h5>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="budget" value="low" required>
+                <span><strong>Under ₹2 lakh</strong><small>Affordable and practical</small></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="budget" value="mid">
+                <span><strong>₹2–5 lakh</strong><small>Everyday performance</small></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="budget" value="high">
+                <span><strong>₹5–10 lakh</strong><small>Premium performance</small></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="budget" value="premium">
+                <span><strong>Above ₹10 lakh</strong><small>Superbike territory</small></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="question">
+          <h5>02. What kind of riding do you love?</h5>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="style" value="city" required>
+                <span><strong>🏙️ City Riding</strong><small>Traffic and daily rides</small></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="style" value="touring">
+                <span><strong>🛣️ Touring</strong><small>Long-distance adventures</small></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="style" value="sport">
+                <span><strong>🏁 Sporty Riding</strong><small>Performance and sharp handling</small></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="style" value="mixed">
+                <span><strong>⚡ A Bit of Everything</strong><small>City, highway and fun</small></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="question">
+          <h5>03. What's your riding experience?</h5>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="experience" value="beginner" required>
+                <span><strong>Beginner</strong><small>Still building confidence</small></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="experience" value="experienced">
+                <span><strong>Experienced</strong><small>Comfortable with powerful bikes</small></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="question">
+          <h5>04. What matters most to you?</h5>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="priority" value="comfort" required>
+                <span><strong>Comfort</strong><small>Relaxed riding position</small></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="priority" value="power">
+                <span><strong>Power & Speed</strong><small>Strong performance</small></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="priority" value="value">
+                <span><strong>Value for Money</strong><small>Manageable ownership costs</small></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label class="option">
+                <input type="radio" name="priority" value="looks">
+                <span><strong>Looks & Presence</strong><small>Bold styling and road presence</small></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-red w-100">
+          FIND MY PERFECT BIKE →
+        </button>
+
+        <p class="muted small text-center mt-3 mb-0">
+          Recommendations are estimates based on your answers.
+        </p>
+      </form>
+
+      <section class="result-card" id="result" aria-live="polite">
+        <p class="text-danger fw-bold mb-2">YOUR DREAM MACHINE</p>
+        <h2 id="bikeName" class="fw-bold"></h2>
+        <p id="bikeDescription" class="muted"></p>
+
+        <div class="d-flex align-items-center gap-3 my-4">
+          <div class="flex-grow-1">
+            <div class="match-track">
+              <div class="match-fill" id="matchFill"></div>
+            </div>
+          </div>
+          <div class="match-number" id="matchNumber">0%</div>
+        </div>
+        <p class="muted small">Estimated preference match — not a performance rating.</p>
+
+        <div id="bikeTags" class="mb-3"></div>
+
+        <h5 class="mt-4">Why this bike?</h5>
+        <div id="reasons"></div>
+
+        <p class="muted small mt-3">
+          Prices and suitability vary by model year, city, rider needs and condition.
+          Check current on-road prices and take a test ride before buying.
+        </p>
+
+        <button type="button" class="btn btn-outline-light mt-2" id="tryAgain">
+          TRY AGAIN
+        </button>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p class="mb-1">SuperBikes Dream Garage 🏍️</p>
+    <small>Find the machine that matches your spirit.</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const bikes = [
+    {
+      name: "TVS Apache RTR 160 4V",
+      budget: "low",
+      styles: ["city", "mixed"],
+      beginner: true,
+      priorities: ["value", "looks"],
+      description: "A practical sporty commuter for everyday Indian roads.",
+      tags: ["Daily riding", "Sporty commuter", "Budget-friendly"]
+    },
+    {
+      name: "Royal Enfield Hunter 350",
+      budget: "low",
+      styles: ["city", "mixed"],
+      beginner: true,
+      priorities: ["comfort", "looks", "value"],
+      description: "A roadster with distinctive styling and an accessible riding character.",
+      tags: ["Roadster", "City rides", "Classic styling"]
+    },
+    {
+      name: "KTM Duke 390",
+      budget: "mid",
+      styles: ["city", "sport", "mixed"],
+      beginner: false,
+      priorities: ["power", "looks"],
+      description: "A performance-focused naked bike for riders wanting an energetic ride.",
+      tags: ["Naked sportbike", "Agile character", "Performance"]
+    },
+    {
+      name: "Royal Enfield Himalayan 450",
+      budget: "mid",
+      styles: ["touring", "mixed"],
+      beginner: false,
+      priorities: ["comfort", "value"],
+      description: "An adventure motorcycle designed for touring and varied terrain.",
+      tags: ["Adventure touring", "Long rides", "Versatility"]
+    },
+    {
+      name: "Kawasaki Z900",
+      budget: "high",
+      styles: ["city", "sport", "mixed"],
+      beginner: false,
+      priorities: ["power", "looks"],
+      description: "A powerful naked motorcycle with a 948 cc inline-four engine and bold streetfighter styling.",
+      tags: ["Naked sportbike", "Inline-four", "Road presence"]
+    },
+    {
+      name: "Kawasaki Ninja ZX-10R",
+      budget: "premium",
+      styles: ["sport"],
+      beginner: false,
+      priorities: ["power", "looks"],
+      description: "A litre-class supersport built around high performance and track-focused engineering.",
+      tags: ["Supersport", "Track-focused", "High performance"]
+    },
+    {
+      name: "Suzuki Hayabusa",
+      budget: "premium",
+      styles: ["touring", "mixed"],
+      beginner: false,
+      priorities: ["comfort", "power", "looks"],
+      description: "A high-performance sport motorcycle known for powerful acceleration and high-speed touring ability.",
+      tags: ["Hyperbike", "Highway touring", "Powerful"]
+    }
+  ];
+
+  const budgetOrder = ["low", "mid", "high", "premium"];
+
+  document.getElementById("finderForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const answers = {
+      budget: document.querySelector('input[name="budget"]:checked').value,
+      style: document.querySelector('input[name="style"]:checked').value,
+      experience: document.querySelector('input[name="experience"]:checked').value,
+      priority: document.querySelector('input[name="priority"]:checked').value
+    };
+
+    const ranked = bikes.map(bike => {
+      let score = 0;
+      const reasons = [];
+
+      const budgetDifference = Math.abs(
+        budgetOrder.indexOf(bike.budget) - budgetOrder.indexOf(answers.budget)
+      );
+
+      if (budgetDifference === 0) {
+        score += 4;
+        reasons.push("Its listed budget category matches your selection.");
+      } else if (budgetDifference === 1) {
+        score += 1;
+      }
+
+      if (bike.styles.includes(answers.style)) {
+        score += 3;
+        reasons.push("Its riding character aligns with your preferred riding style.");
+      }
+
+      if (answers.experience === "beginner" && bike.beginner) {
+        score += 2;
+        reasons.push("Its general category may be more approachable for a newer rider.");
+      } else if (answers.experience === "experienced") {
+        score += 1;
+      }
+
+      if (bike.priorities.includes(answers.priority)) {
+        score += 2;
+        reasons.push("It aligns with your selected priority.");
+      }
+
+      return { bike, score, reasons };
+    });
+
+    ranked.sort((a, b) => b.score - a.score);
+
+    const best = ranked[0];
+    const second = ranked[1];
+    const maxScore = 11;
+    const match = Math.min(98, Math.round((best.score / maxScore) * 100));
+
+    document.getElementById("bikeName").textContent = best.bike.name;
+    document.getElementById("bikeDescription").textContent = best.bike.description;
+    document.getElementById("matchNumber").textContent = match + "%";
+    document.getElementById("matchFill").style.width = match + "%";
+
+    document.getElementById("bikeTags").innerHTML = best.bike.tags
+      .map(tag => `<span class="result-tag">${tag}</span>`)
+      .join("");
+
+    const reasonList = best.reasons.length
+      ? best.reasons
+      : ["This is the closest match among the bikes in our current sample list."];
+
+    document.getElementById("reasons").innerHTML = reasonList
+      .map(reason => `<div class="reason">✓ ${reason}</div>`)
+      .join("");
+
+    const result = document.getElementById("result");
+    result.classList.add("show");
+    result.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  document.getElementById("tryAgain").addEventListener("click", function() {
+    document.getElementById("finderForm").reset();
+    document.getElementById("result").classList.remove("show");
+    document.getElementById("finderForm").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ownership Cost Calculator | SuperBikes Dream Garage</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #101014;
+      --panel: #1b1b23;
+      --red: #ff354b;
+      --muted: #aaaab5;
+      --border: #373741;
+    }
+
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background: #08080b;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      color: var(--red);
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .nav-link {
+      color: #ddd !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--red) !important;
+    }
+
+    .hero {
+      padding: 55px 0 35px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.3rem);
+      font-weight: 900;
+    }
+
+    .hero h1 span {
+      color: var(--red);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 25px;
+      height: 100%;
+    }
+
+    .form-label {
+      color: #eee;
+      font-weight: 600;
+    }
+
+    .form-control,
+    .form-select {
+      background-color: #111117;
+      color: #fff;
+      border: 1px solid #444450;
+      padding: 12px;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      background-color: #111117;
+      color: #fff;
+      border-color: var(--red);
+      box-shadow: 0 0 0 0.2rem #ff354b30;
+    }
+
+    .form-select option {
+      background: #111117;
+      color: white;
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: white;
+      border: none;
+      padding: 13px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .btn-red:hover {
+      background: #e52239;
+      color: white;
+    }
+
+    .cost-card {
+      background: #22222b;
+      border: 1px solid #3c3c48;
+      border-radius: 13px;
+      padding: 18px;
+      height: 100%;
+    }
+
+    .cost-value {
+      font-size: clamp(1.25rem, 3vw, 1.8rem);
+      font-weight: 800;
+      color: var(--red);
+      overflow-wrap: anywhere;
+    }
+
+    .cost-label {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .expense-row {
+      margin-bottom: 22px;
+    }
+
+    .expense-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .expense-track {
+      height: 10px;
+      background: #383842;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .expense-fill {
+      height: 100%;
+      background: var(--red);
+      border-radius: 10px;
+      transition: width 0.3s;
+    }
+
+    .note {
+      border-left: 3px solid var(--red);
+      padding: 12px 15px;
+      background: #252027;
+      border-radius: 5px;
+      color: #ddd;
+      font-size: 14px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding: 22px 0;
+      margin-top: 55px;
+      text-align: center;
+    }
+
+    @media (max-width: 576px) {
+      .panel {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand brand" href="index.html">
+      SUPERBIKES<span class="text-white"> DREAM GARAGE</span>
+    </a>
+
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="bikes.html">Explore Bikes</a></li>
+        <li class="nav-item"><a class="nav-link" href="compare.html">Compare</a></li>
+        <li class="nav-item"><a class="nav-link" href="finder.html">Bike Finder</a></li>
+        <li class="nav-item"><a class="nav-link active" href="cost-calculator.html">Cost Calculator</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        
+<li class="nav-item">
+  <a class="nav-link" href="community.html">Rider Hub</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="customizer.html">Customisation</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="showrooms.html">Showrooms</a>
+</li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <p class="text-danger fw-bold mb-2">PLAN SMART. RIDE MORE.</p>
+    <h1>OWNERSHIP <span>COST CALCULATOR</span></h1>
+    <p class="muted mt-3">
+      Discover what your dream bike could cost to own and ride.
+    </p>
+  </div>
+</header>
+
+<main class="container pb-4">
+  <div class="row g-4">
+
+    <!-- USER INPUTS -->
+    <div class="col-lg-5">
+      <section class="panel">
+        <h2 class="section-title">01. Your Bike & Expenses</h2>
+
+        <form id="costForm">
+
+          <div class="mb-3">
+            <label for="bike" class="form-label">Choose your bike</label>
+            <select class="form-select" id="bike">
+              <option value="custom">Other / Custom bike</option>
+              <option value="150000">TVS Apache RTR 160 4V</option>
+              <option value="180000">Royal Enfield Hunter 350</option>
+              <option value="350000">KTM Duke 390</option>
+              <option value="380000">Royal Enfield Himalayan 450</option>
+              <option value="1100000">Kawasaki Z900</option>
+              <option value="1900000">Kawasaki Ninja ZX-10R</option>
+              <option value="2000000">Suzuki Hayabusa</option>
+            </select>
+            <small class="muted">Sample prices only. Edit them to match your city and model year.</small>
+          </div>
+
+          <div class="mb-3">
+            <label for="bikePrice" class="form-label">Estimated on-road price (₹)</label>
+            <input type="number" class="form-control" id="bikePrice"
+              min="0" max="100000000" step="1000" value="1100000" required>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-6">
+              <label for="distance" class="form-label">Daily distance (km)</label>
+              <input type="number" class="form-control" id="distance"
+                min="0" max="1000" step="1" value="25" required>
+            </div>
+
+            <div class="col-6">
+              <label for="mileage" class="form-label">Mileage (km/l)</label>
+              <input type="number" class="form-control" id="mileage"
+                min="0.1" max="200" step="0.1" value="18" required>
+            </div>
+          </div>
+
+          <div class="mt-3 mb-3">
+            <label for="fuelPrice" class="form-label">Petrol price per litre (₹)</label>
+            <input type="number" class="form-control" id="fuelPrice"
+              min="0" max="10000" step="0.1" value="105" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="service" class="form-label">Annual servicing & maintenance (₹)</label>
+            <input type="number" class="form-control" id="service"
+              min="0" max="10000000" step="500" value="15000" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="insurance" class="form-label">Annual insurance (₹)</label>
+            <input type="number" class="form-control" id="insurance"
+              min="0" max="10000000" step="500" value="12000" required>
+          </div>
+
+          <div class="mb-4">
+            <label for="years" class="form-label">Ownership period</label>
+            <select class="form-select" id="years">
+              <option value="1">1 year</option>
+              <option value="3" selected>3 years</option>
+              <option value="5">5 years</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-red w-100">
+            CALCULATE OWNERSHIP COST
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="col-lg-7">
+      <section class="panel">
+        <h2 class="section-title">02. Your Cost Breakdown</h2>
+        <p class="muted small">
+          Estimates update when you calculate. Adjust the inputs to suit your situation.
+        </p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6">
+            <div class="cost-card">
+              <p class="cost-label">Estimated monthly running cost</p>
+              <div class="cost-value" id="monthlyCost">₹0</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="cost-card">
+              <p class="cost-label">Estimated annual running cost</p>
+              <div class="cost-value" id="annualCost">₹0</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="cost-card">
+              <p class="cost-label" id="totalLabel">Estimated total over 3 years (including bike price)</p>
+              <div class="cost-value" id="totalCost">₹0</div>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="fw-bold mb-4">Annual Expense Distribution</h5>
+
+        <div id="expenseBreakdown">
+          <p class="muted">Your expense breakdown will appear here.</p>
+        </div>
+
+        <div class="note mt-4">
+          <strong>Remember:</strong> This is an estimate, not a dealer quote.
+          Actual costs depend on traffic, riding habits, fuel prices, maintenance,
+          insurance, taxes and unexpected repairs.
+        </div>
+      </section>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p class="mb-1">SuperBikes Dream Garage 🏍️</p>
+    <small>Know the cost. Own the dream.</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const $ = id => document.getElementById(id);
+
+  const rupees = amount => new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0
+  }).format(Math.round(amount));
+
+  $("bike").addEventListener("change", function () {
+    if (this.value !== "custom") {
+      $("bikePrice").value = this.value;
+    }
+    calculateCosts();
+  });
+
+  $("costForm").addEventListener("input", calculateCosts);
+  $("costForm").addEventListener("change", calculateCosts);
+
+  $("costForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    if (!$("costForm").reportValidity()) return;
+    calculateCosts();
+    $("totalCost").scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  function calculateCosts() {
+    const price = Number($("bikePrice").value);
+    const distance = Number($("distance").value);
+    const mileage = Number($("mileage").value);
+    const fuelPrice = Number($("fuelPrice").value);
+    const service = Number($("service").value);
+    const insurance = Number($("insurance").value);
+    const years = Number($("years").value);
+
+    const fields = [price, distance, mileage, fuelPrice, service, insurance, years];
+
+    if (fields.some(value => !Number.isFinite(value) || value < 0) ||
+        mileage <= 0 || years <= 0 ||
+        price > 100000000 || distance > 1000 || mileage > 200 ||
+        fuelPrice > 10000 || service > 10000000 || insurance > 10000000) {
+      return;
+    }
+
+    const annualDistance = distance * 365;
+    const annualFuelCost = (annualDistance / mileage) * fuelPrice;
+    const annualRunningCost = annualFuelCost + service + insurance;
+    const monthlyRunningCost = annualRunningCost / 12;
+
+    // Ownership total = bike purchase price + running costs over selected years.
+    const ownershipTotal = price + annualRunningCost * years;
+
+    $("monthlyCost").textContent = rupees(monthlyRunningCost);
+    $("annualCost").textContent = rupees(annualRunningCost);
+    $("totalCost").textContent = rupees(ownershipTotal);
+    $("totalLabel").textContent =
+      `Estimated total over ${years} ${years === 1 ? "year" : "years"} (including bike price)`;
+
+    const expenses = [
+      { name: "Fuel", amount: annualFuelCost },
+      { name: "Servicing & maintenance", amount: service },
+      { name: "Insurance", amount: insurance }
+    ];
+
+    const maxExpense = Math.max(...expenses.map(item => item.amount), 1);
+
+    $("expenseBreakdown").innerHTML = expenses.map(item => `
+      <div class="expense-row">
+        <div class="expense-heading">
+          <span>${item.name}</span>
+          <strong>${rupees(item.amount)}</strong>
+        </div>
+        <div class="expense-track">
+          <div class="expense-fill"
+            style="width:${(item.amount / maxExpense) * 100}%"></div>
+        </div>
+      </div>
+    `).join("") + `
+      <div class="d-flex justify-content-between gap-3 mt-4 pt-3 border-top"
+        style="border-color:#373741 !important">
+        <strong>Total annual running cost</strong>
+        <strong class="text-danger">${rupees(annualRunningCost)}</strong>
+      </div>
+    `;
+  }
+
+  // Display the default calculation when the page opens.
+  calculateCosts();
+</script>
+
+</body>
+</html>
